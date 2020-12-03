@@ -4,6 +4,6 @@
     JdbcDriver  com.mysql.cj.jdbc.Driver
     JdbcUrl jdbc:mysql://localhost:3306/travel_agency?serverTimezone=UTC&amp;useSSL=false
     UserName root
-    Password 68Feliten
+    Password test
 </Resource>
 </tomee>
