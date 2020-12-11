@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tomee>
-<Resource name="travel_agency_db" id="travel_agency_db" type="DataSource">
+<Resource name="travel_agency_db" id="jdbc/travel_agency" type="DataSource">
     JdbcDriver  com.mysql.cj.jdbc.Driver
     JdbcUrl jdbc:mysql://localhost:3306/travel_agency?serverTimezone=UTC&amp;useSSL=false
     UserName root
-    Password testPwd
+    Password 68Feliten
+    jtaManaged true
+    DefaultAutoCommit true
 </Resource>
 </tomee>

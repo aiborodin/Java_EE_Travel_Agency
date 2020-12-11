@@ -1,7 +1,7 @@
 package com.travelagency.service;
 
-import com.travelagency.dao.interfaces.ClientDao;
-import com.travelagency.dao.interfaces.ContractDAO;
+import com.travelagency.dao.interfaces.ContractDao;
+import com.travelagency.dao.interfaces.annotations.JPA;
 import com.travelagency.entity.Contract;
 import com.travelagency.service.interfaces.ContractService;
 import com.travelagency.service.interfaces.annotations.Loggable;
@@ -18,9 +18,9 @@ public class ContractServiceBean
         implements ContractService {
 
     @Inject
-    void setDao(ContractDAO contractDAO) {
+    void setDao(@JPA ContractDao contractDAO) {
         dao = contractDAO;
-        items = contractDAO.readAll();
+        items = contractDAO.findAll();
     }
 
 }

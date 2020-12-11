@@ -7,6 +7,8 @@ import com.travelagency.service.interfaces.AgentService;
 import com.travelagency.service.interfaces.ClientService;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

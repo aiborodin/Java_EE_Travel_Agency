@@ -30,7 +30,7 @@
         <tr>
             <td>${travelOffer.name}</td>
             <td>${travelOffer.dayPrice}</td>
-            <td>${travelOffer.offerType}</td>
+            <td>${travelOffer.offerType.getTypeName()}</td>
             <td>
                 <a href="${pageContext.request.contextPath}/jsp/travelOffers/editOffer.jsp?id=${travelOffer.id}">Edit</a>
             </td>

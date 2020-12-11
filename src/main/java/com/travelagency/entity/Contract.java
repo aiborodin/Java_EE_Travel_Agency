@@ -1,6 +1,12 @@
 package com.travelagency.entity;
 
-public class Contract implements Identifiable{
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
+@Entity
+public class Contract implements Identifiable, Serializable {
 
     private int id;
     private Client client;
@@ -10,6 +16,9 @@ public class Contract implements Identifiable{
     private int travelDays;
     private double transportationCosts;
     private double totalVisaCosts;
+
+    public Contract() {
+    }
 
     public Contract(int id, Client client, Agent agent, TravelOffer travelOffer, int travelDays, double transportationCosts, double totalVisaCosts) {
         this.id = id;
@@ -22,6 +31,10 @@ public class Contract implements Identifiable{
     }
 
     @Override
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @NotNull
     public int getId() {
         return id;
     }
@@ -31,6 +44,8 @@ public class Contract implements Identifiable{
         this.id = id;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     public Client getClient() {
         return client;
     }
@@ -39,6 +54,8 @@ public class Contract implements Identifiable{
         this.client = client;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "agent_id")
     public Agent getAgent() {
         return agent;
     }
@@ -47,6 +64,8 @@ public class Contract implements Identifiable{
         this.agent = agent;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "travel_offer_id")
     public TravelOffer getTravelOffer() {
         return travelOffer;
     }
@@ -55,6 +74,9 @@ public class Contract implements Identifiable{
         this.travelOffer = travelOffer;
     }
 
+    @Basic
+    @Column(name = "travel_days")
+    @NotNull
     public int getTravelDays() {
         return travelDays;
     }
@@ -63,6 +85,9 @@ public class Contract implements Identifiable{
         this.travelDays = travelDays;
     }
 
+    @Basic
+    @Column(name = "total_transp_costs")
+    @NotNull
     public double getTransportationCosts() {
         return transportationCosts;
     }
@@ -71,6 +96,8 @@ public class Contract implements Identifiable{
         this.transportationCosts = transportationCosts;
     }
 
+    @Basic
+    @Column(name = "total_visa_costs")
     public double getTotalVisaCosts() {
         return totalVisaCosts;
     }

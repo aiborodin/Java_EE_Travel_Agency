@@ -24,6 +24,7 @@
 <head>
     <title>Agent Menu</title>
 </head>
+<div style="display: table;"></div>
 <body>
 <h2>Welcome, ${cookie.userName.value}.</h2>
 <h2>Agent resources:</h2>

@@ -8,24 +8,20 @@ import java.util.logging.*;
 
 public class LoggingProducer {
 
-    private FileHandler fh;
-
-    public LoggingProducer() {
-        try {
-            fh = new FileHandler("./Beans.log", true);
-            SimpleFormatter formatter = new SimpleFormatter();
-            fh.setFormatter(formatter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Для каждого бина можно создать свой Logger с помощью injection-метода в бине
     @Produces
     private Logger createLogger(InjectionPoint injectionPoint) {
         Logger logger = Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
-        logger.setLevel(Level.ALL);
-        logger.addHandler(fh);
+//        Logger logger = Logger.getLogger(injectionPoint.getBean().getBeanClass().getName());
+        try {
+            final FileHandler fh = new FileHandler("./Beans.log", true);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+            logger.addHandler(fh);
+            logger.setLevel(Level.ALL);
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            e.printStackTrace();
+        }
         return logger;
     }
 

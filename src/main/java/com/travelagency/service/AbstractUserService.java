@@ -7,8 +7,7 @@ import com.travelagency.service.interfaces.UserService;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractUserService<T extends User>
-        extends AbstractEntityService<T>
+public abstract class AbstractUserService<T extends User> extends AbstractEntityService<T>
         implements UserService<T> {
 
     @Override

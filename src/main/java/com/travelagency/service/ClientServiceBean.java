@@ -1,6 +1,7 @@
 package com.travelagency.service;
 
 import com.travelagency.dao.interfaces.ClientDao;
+import com.travelagency.dao.interfaces.annotations.JPA;
 import com.travelagency.entity.Client;
 import com.travelagency.service.interfaces.ClientService;
 import com.travelagency.service.interfaces.annotations.Loggable;
@@ -17,9 +18,9 @@ public class ClientServiceBean
         extends AbstractUserService<Client> implements ClientService {
 
     @Inject
-    void setDao(ClientDao clientDao) {
+    void setDao(@JPA ClientDao clientDao) {
         dao = clientDao;
-        items = clientDao.readAll();
+        items = clientDao.findAll();
     }
 
     @Override
@@ -28,5 +29,4 @@ public class ClientServiceBean
                 .filter(u -> u.getEmail().matches("*" + email + "*"))
                 .findAny();
     }
-
 }

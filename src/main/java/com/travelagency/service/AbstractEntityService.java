@@ -4,9 +4,15 @@ import com.travelagency.dao.interfaces.GenericDao;
 import com.travelagency.entity.Identifiable;
 import com.travelagency.service.interfaces.GenericService;
 
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public abstract class AbstractEntityService<T extends Identifiable>
@@ -19,6 +25,28 @@ public abstract class AbstractEntityService<T extends Identifiable>
 
     protected GenericDao<T> dao;
 
+//    protected ValidatorFactory validatorFactory;
+//
+//    protected Validator validator;
+//
+//    public AbstractEntityService() {
+//        validatorFactory = Validation.buildDefaultValidatorFactory();
+//        validator = validatorFactory.getValidator();
+//    }
+
+//    @PreDestroy
+//    void disposeValidator() {
+//        validatorFactory.close();
+//    }
+//
+//    protected String validateEntity(T entity) {
+//        Set<ConstraintViolation<T>> violationSet = validator.validate(entity);
+//        for (ConstraintViolation<T> violation : violationSet){
+//            return (violation.getPropertyPath() + " " + violation.getMessage());
+//        }
+//        return null;
+//    }
+
     @Override
     public Optional<T> find(int id) {
         return items.stream().filter(item -> item.getId() == id).findAny();
@@ -26,11 +54,8 @@ public abstract class AbstractEntityService<T extends Identifiable>
 
     @Override
     public boolean delete(int id) {
-        boolean deleted = items.removeIf(item -> item.getId() == id);
-        if (deleted) {
-            dao.delete(id);
-        }
-        return deleted;
+        dao.delete(id);
+        return items.removeIf(item -> item.getId() == id);
     }
 
     @Override
@@ -39,8 +64,8 @@ public abstract class AbstractEntityService<T extends Identifiable>
         for (int i = 0; i < items.size(); i++) {
             oldItem = items.get(i);
             if (oldItem.getId() == newItem.getId()) {
-                items.set(i, newItem);
                 dao.update(newItem);
+                items.set(i, newItem);
                 break;
             }
         }
@@ -48,7 +73,7 @@ public abstract class AbstractEntityService<T extends Identifiable>
 
     @Override
     public void add(T item) {
-        int id = dao.add(item);
+        int id = dao.persist(item);
         if (id != -1) {
             item.setId(id);
             items.add(item);

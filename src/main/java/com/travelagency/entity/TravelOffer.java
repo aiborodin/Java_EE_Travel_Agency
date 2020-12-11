@@ -1,13 +1,24 @@
 package com.travelagency.entity;
 
-public class TravelOffer implements Identifiable {
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.time.OffsetDateTime;
+
+@Entity
+@Table(name = "travel_offer", schema = "travel_agency")
+public class TravelOffer implements Identifiable, Serializable {
 
     private int id;
     private String name;
     private double dayPrice;
-    private String offerType;
+    private OfferType offerType;
 
-    public TravelOffer(int id, String name, double dayPrice, String offerType) {
+    public TravelOffer() {
+    }
+
+    public TravelOffer(int id, String name, double dayPrice, OfferType offerType) {
         this.id = id;
         this.name = name;
         this.dayPrice = dayPrice;
@@ -15,6 +26,10 @@ public class TravelOffer implements Identifiable {
     }
 
     @Override
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @NotNull
     public int getId() {
         return id;
     }
@@ -24,6 +39,21 @@ public class TravelOffer implements Identifiable {
         this.id = id;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "offer_type")
+    @NotNull
+    @Size(max = 20)
+    public OfferType getOfferType() {
+        return offerType;
+    }
+
+    public void setOfferType(OfferType offerType) {
+        this.offerType = offerType;
+    }
+
+    @Basic
+    @Column(name = "name")
+    @NotNull
     public String getName() {
         return name;
     }
@@ -32,19 +62,14 @@ public class TravelOffer implements Identifiable {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "day_price")
+
     public double getDayPrice() {
         return dayPrice;
     }
 
     public void setDayPrice(double dayPrice) {
         this.dayPrice = dayPrice;
-    }
-
-    public String getOfferType() {
-        return offerType;
-    }
-
-    public void setOfferType(String offerType) {
-        this.offerType = offerType;
     }
 }

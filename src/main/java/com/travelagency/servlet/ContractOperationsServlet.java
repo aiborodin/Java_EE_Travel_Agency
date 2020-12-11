@@ -7,13 +7,17 @@ import com.travelagency.service.interfaces.ClientService;
 import com.travelagency.service.interfaces.ContractService;
 import com.travelagency.service.interfaces.TravelOfferService;
 
+import javax.ejb.EJBException;
 import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 
 @WebServlet(name = "ContractOperationServlet", urlPatterns = "/contractOperation")
@@ -33,40 +37,53 @@ public class ContractOperationsServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String operation = request.getParameter("operationType");
-        switch (operation) {
-            case "edit":
-                int contractId = Integer.parseInt(request.getParameter("id"));
-                Contract oldContract = contractService.find(contractId).get();
-                contractService.update(
-                        new Contract(
-                                oldContract.getId(),
-                                clientService.find(Integer.parseInt(request.getParameter("client"))).get(),
-                                agentService.find(Integer.parseInt(request.getParameter("agent"))).get(),
-                                travelOfferService.find(Integer.parseInt(request.getParameter("travelOffer"))).get(),
-                                Integer.parseInt(request.getParameter("travelDays")),
-                                Double.parseDouble(request.getParameter("transpCosts")),
-                                Double.parseDouble(request.getParameter("visaCosts"))
-                        )
-                );
-                break;
-            case "delete":
-                contractId = Integer.parseInt(request.getParameter("id"));
-                contractService.delete(contractId);
-                break;
-            case "add":
-                contractService.add(
-                        new Contract(
-                                -1,
-                                clientService.find(Integer.parseInt(request.getParameter("client"))).get(),
-                                agentService.find(Integer.parseInt(request.getParameter("agent"))).get(),
-                                travelOfferService.find(Integer.parseInt(request.getParameter("travelOffer"))).get(),
-                                Integer.parseInt(request.getParameter("travelDays")),
-                                Double.parseDouble(request.getParameter("transpCosts")),
-                                Double.parseDouble(request.getParameter("visaCosts"))
-                        )
-                );
+        try {
+            switch (operation) {
+                case "edit":
+                    int contractId = Integer.parseInt(request.getParameter("id"));
+                    Contract oldContract = contractService.find(contractId).get();
+                    contractService.update(
+                            new Contract(
+                                    oldContract.getId(),
+                                    clientService.find(Integer.parseInt(request.getParameter("client"))).get(),
+                                    agentService.find(Integer.parseInt(request.getParameter("agent"))).get(),
+                                    travelOfferService.find(Integer.parseInt(request.getParameter("travelOffer"))).get(),
+                                    Integer.parseInt(request.getParameter("travelDays")),
+                                    Double.parseDouble(request.getParameter("transpCosts")),
+                                    Double.parseDouble(request.getParameter("visaCosts"))
+                            )
+                    );
+                    break;
+                case "delete":
+                    contractId = Integer.parseInt(request.getParameter("id"));
+                    contractService.delete(contractId);
+                    break;
+                case "add":
+                    contractService.add(
+                            new Contract(
+                                    0,
+                                    clientService.find(Integer.parseInt(request.getParameter("client"))).get(),
+                                    agentService.find(Integer.parseInt(request.getParameter("agent"))).get(),
+                                    travelOfferService.find(Integer.parseInt(request.getParameter("travelOffer"))).get(),
+                                    Integer.parseInt(request.getParameter("travelDays")),
+                                    Double.parseDouble(request.getParameter("transpCosts")),
+                                    Double.parseDouble(request.getParameter("visaCosts"))
+                            )
+                    );
+            }
+            request.getRequestDispatcher("/jsp/contracts/contracts.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("/jsp/contracts/contracts.jsp").forward(request, response);
+        catch (EJBException e) {
+            Throwable t = e.getCause();
+            while ((t != null) && !(t instanceof ConstraintViolationException)) {
+                t = t.getCause();
+            }
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<div style=\"display: table;\" class=\"alert alert-danger\" role=\"alert\"> Incorrect values entered! </div>");
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/contracts/contracts.jsp");
+            rd.include(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

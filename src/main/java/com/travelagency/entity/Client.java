@@ -1,8 +1,16 @@
 package com.travelagency.entity;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Client extends User{
+@Entity
+@Table(name = "client", schema = "travel_agency")
+public class Client extends User {
 
     private String first_name;
     private String last_name;
@@ -10,6 +18,9 @@ public class Client extends User{
     private String phone;
     private String email;
     private LocalDate customerFrom;
+
+    public Client() {
+    }
 
     public Client(String login, String password, int id,
                   String first_name, String last_name, int age, String phone, String email, LocalDate customerFrom) {
@@ -22,6 +33,10 @@ public class Client extends User{
         this.customerFrom = customerFrom;
     }
 
+    @Basic
+    @Column(name = "first_name")
+    @NotNull
+    @Size(max = 30)
     public String getFirstName() {
         return first_name;
     }
@@ -30,6 +45,8 @@ public class Client extends User{
         this.first_name = first_name;
     }
 
+    @Basic
+    @Column(name = "last_name")
     public String getLastName() {
         return last_name;
     }
@@ -38,6 +55,8 @@ public class Client extends User{
         this.last_name = last_name;
     }
 
+    @Basic
+    @Column(name = "age")
     public int getAge() {
         return age;
     }
@@ -46,6 +65,9 @@ public class Client extends User{
         this.age = age;
     }
 
+    @Basic
+    @Column(name = "phone")
+    @Pattern(regexp = "^[+]*[(]?[0-9]{1,4}[)]?[-\\s\\./0-9]*$")
     public String getPhone() {
         return phone;
     }
@@ -54,6 +76,8 @@ public class Client extends User{
         this.phone = phone;
     }
 
+    @Basic
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -62,6 +86,8 @@ public class Client extends User{
         this.email = email;
     }
 
+    @Basic
+    @Column(name = "cust_from")
     public LocalDate getCustomerFrom() {
         return customerFrom;
     }
