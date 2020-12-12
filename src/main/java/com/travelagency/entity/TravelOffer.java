@@ -42,7 +42,6 @@ public class TravelOffer implements Identifiable, Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "offer_type")
     @NotNull
-    @Size(max = 20)
     public OfferType getOfferType() {
         return offerType;
     }
@@ -54,6 +53,7 @@ public class TravelOffer implements Identifiable, Serializable {
     @Basic
     @Column(name = "name")
     @NotNull
+    @Size(max = 20)
     public String getName() {
         return name;
     }
@@ -64,7 +64,6 @@ public class TravelOffer implements Identifiable, Serializable {
 
     @Basic
     @Column(name = "day_price")
-
     public double getDayPrice() {
         return dayPrice;
     }

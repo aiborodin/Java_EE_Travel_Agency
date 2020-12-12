@@ -39,7 +39,7 @@
 
             <td>Day price</td>
             <td>
-                <input type="number" name="visaCosts" required>
+                <input type="number" name="dayPrice" required>
             </td>
         </tr>
         <tr>

@@ -11,5 +11,4 @@ import javax.ejb.Stateless;
 public class ContractDaoImpl extends AbstractJpaDao<Contract>
         implements ContractDao {
 
-
 }

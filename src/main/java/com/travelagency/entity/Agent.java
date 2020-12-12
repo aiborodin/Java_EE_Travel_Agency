@@ -14,6 +14,7 @@ import java.io.Serializable;
         @NamedQuery(name = "findActive", query = "SELECT a FROM Agent a WHERE a.active = true"),
         @NamedQuery(name = "findByFirstName", query = "SELECT a FROM Agent a WHERE a.firstName = :firstName")
 })
+@ActiveAgent
 public class Agent extends User {
 
     private String first_name;
@@ -55,7 +56,6 @@ public class Agent extends User {
 
     @Basic
     @Column(name = "active")
-    @ActiveAgent
     public boolean isActive() {
         return active;
     }

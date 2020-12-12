@@ -6,12 +6,13 @@ import com.travelagency.entity.Contract;
 import com.travelagency.service.interfaces.ContractService;
 import com.travelagency.service.interfaces.annotations.Loggable;
 
+import javax.ejb.Singleton;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+@Singleton
 @Named("contractService")
-@ApplicationScoped
 @Loggable
 public class ContractServiceBean
         extends AbstractEntityService<Contract>

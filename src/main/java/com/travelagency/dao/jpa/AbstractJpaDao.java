@@ -32,11 +32,11 @@ public abstract class AbstractJpaDao<T extends Serializable & Identifiable> impl
 
     @Override
     public void delete(int id) {
-        T entity = findOne((long) id);
+        T entity = findOne(id);
         entityManager.remove(entity);
     }
 
-    public T findOne(Long id) {
+    public T findOne(int id) {
         return entityManager.find(clazz, id);
     }
 

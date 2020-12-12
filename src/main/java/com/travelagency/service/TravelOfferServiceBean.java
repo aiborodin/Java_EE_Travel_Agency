@@ -6,14 +6,15 @@ import com.travelagency.entity.TravelOffer;
 import com.travelagency.service.interfaces.TravelOfferService;
 import com.travelagency.service.interfaces.annotations.Loggable;
 
+import javax.ejb.Singleton;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Singleton
 @Named("travelOfferService")
-@ApplicationScoped
 @Loggable
 public class TravelOfferServiceBean
         extends AbstractEntityService<TravelOffer>

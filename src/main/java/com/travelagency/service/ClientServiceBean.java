@@ -6,13 +6,14 @@ import com.travelagency.entity.Client;
 import com.travelagency.service.interfaces.ClientService;
 import com.travelagency.service.interfaces.annotations.Loggable;
 
+import javax.ejb.Singleton;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Optional;
 
+@Singleton
 @Named("clientService")
-@ApplicationScoped
 @Loggable
 public class ClientServiceBean
         extends AbstractUserService<Client> implements ClientService {
@@ -26,7 +27,7 @@ public class ClientServiceBean
     @Override
     public Optional<Client> findByEmail(String email) {
         return items.stream()
-                .filter(u -> u.getEmail().matches("*" + email + "*"))
+                .filter(u -> u.getEmail().matches(".*" + email + ".*"))
                 .findAny();
     }
 }

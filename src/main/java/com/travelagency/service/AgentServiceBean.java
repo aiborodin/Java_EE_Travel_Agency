@@ -6,12 +6,14 @@ import com.travelagency.entity.Agent;
 import com.travelagency.service.interfaces.AgentService;
 import com.travelagency.service.interfaces.annotations.Loggable;
 
+import javax.ejb.Singleton;
+import javax.ejb.Stateful;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+@Singleton
 @Named("agentService")
-@ApplicationScoped
 @Loggable
 public class AgentServiceBean
         extends AbstractUserService<Agent> implements AgentService {

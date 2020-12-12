@@ -6,6 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="Travel Agency" />
           <factory-entry name="default" value="1802bc2a-efdd-44dc-a3d5-0166b1c1ec03" />
           <factory-entry name="travelAgency_PU" value="1802bc2a-efdd-44dc-a3d5-0166b1c1ec03" />
         </datasource-mapping>
