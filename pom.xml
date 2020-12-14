@@ -57,6 +57,12 @@
             <version>2.5</version>
             <scope>compile</scope>
         </dependency>
+        <!--For SOAP client (Main class)-->
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>rt</artifactId>
+            <version>2.3.1</version>
+        </dependency>
 
         <!--        <dependency>-->
 <!--            <groupId>mysql</groupId>-->
@@ -72,27 +78,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.0</version>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>jaxws-maven-plugin</artifactId>-->
-<!--                <version>2.6</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>wsimport-from-jdk</id>-->
-<!--                        <goals>-->
-<!--                            <goal>wsimport</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <wsdlUrls>-->
-<!--                        <wsdlUrl>/Users/admin/Downloads/_ConverterService.xml</wsdlUrl>-->
-<!--                    </wsdlUrls>-->
-<!--                    <keep>true</keep>-->
-<!--                    <packageName>com.travelagency</packageName>-->
-<!--                    <sourceDestDir>src/main/java</sourceDestDir>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 </project>
